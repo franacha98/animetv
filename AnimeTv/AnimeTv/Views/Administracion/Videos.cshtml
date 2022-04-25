@@ -1,0 +1,22 @@
+﻿@model AdministrarVideosViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdministracion.cshtml";
+}
+<h1>Subir un vídeo</h1>
+<form method="post" enctype="multipart/form-data" asp-controller="Administracion" asp-action="SubirVideo">
+    <label for="pAnime">Selecciona un anime:</label><br />
+    <input list="listaAnimes" name="pAnime" id="pAnime">
+    <datalist id="listaAnimes">
+        @foreach (var anime in Model.ListaAnimes)
+        {
+            <option value="@anime.mal_id">@anime.title</option>
+        }
+    </datalist><br />
+    <div id="imagenAnime"></div>
+    <br />
+    <label for="pCapitulo">Selecciona el capítulo correspondiente al vídeo:</label><br />
+    <input type="number" name="pCapitulo" id="pCapitulo" placeholder="1" /><br />
+    <label for="pVideoFile">Archivo de vídeo:</label><br />
+    <input type="file" name="pVideoFile" id="pVideoFile" /><br /><br />
+    <input type="submit" value="Subir vídeo" />
+</form>

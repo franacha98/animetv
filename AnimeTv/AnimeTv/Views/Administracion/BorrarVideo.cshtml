@@ -1,0 +1,21 @@
+﻿@model BorrarVideoModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdministracion.cshtml";
+}
+<h1>Eliminar un vídeo</h1>
+<form method="post" enctype="multipart/form-data" asp-controller="Administracion" asp-action="BorrarVideo">
+    <label for="pAnime">Selecciona un anime:</label><br />
+    <input list="listaAnimes" name="pAnime" id="pAnime">
+    <datalist id="listaAnimes">
+        @foreach (var anime in Model.ListaAnimes)
+        {
+            <option value="@anime.mal_id">@anime.title</option>
+        }
+    </datalist><br />
+    <div id="imagenAnime"></div>
+    <br />
+    <label for="pCapitulo">Selecciona el capítulo correspondiente al vídeo:</label><br />
+    <input type="number" name="pCapitulo" id="pCapitulo" placeholder="1" /><br /><br />
+
+    <input type="submit" value="Eliminar vídeo" />
+</form>

@@ -1,0 +1,29 @@
+﻿<div class="vertical-nav" id="sidebar">
+    <div class="py-4 px-3 mb-4">
+        <div class="media d-flex align-items-center">
+            <div class="media-body">
+                <img src="~/img/logo_principal_blanco.png" style="width: 100%" />
+                <p style="font-weight: bold; color: aliceblue;">MENÚ</p>
+            </div>
+        </div>
+    </div>    
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+          <i class="icon-admin fa fa-home fa-lg" aria-hidden="true"></i>
+          <a asp-area="" asp-controller="Administracion" asp-action="Index">Inicio</a>
+      </li>
+      <li class="nav-item">
+          <i class="icon-admin fa fa-user fa-lg" aria-hidden="true"></i>
+          <a asp-area="" asp-controller="Administracion" asp-action="Usuarios">Administrar usuarios</a>
+      </li>
+      <li class="nav-item">
+          <i class="icon-admin fa fa-video-camera fa-lg" aria-hidden="true"></i>
+          <a asp-area="" asp-controller="Administracion" asp-action="Videos">Subir vídeo</a>
+      </li>
+      <li class="nav-item">
+          <i class="icon-admin fa fa-trash fa-lg" aria-hidden="true"></i>
+          <a asp-area="" asp-controller="Administracion" asp-action="BorrarVideoIndex">Eliminar un vídeo</a>
+      </li>
+    </ul>
+</div>
+

@@ -1,26 +1,31 @@
 ﻿using AnimeTv.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Utils;
 
 namespace AnimeTv.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
+        //private IConfiguration mConfiguration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> pLoggingService, IConfiguration pConfigurationService)
         {
-            _logger = logger;
+            mConfigurationService = pConfigurationService;
+            mLoggingService = pLoggingService;
         }
 
         public IActionResult Index()
         {
             return View();
+
         }
 
         public IActionResult Privacy()

@@ -69,3 +69,87 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*ESTILOS*/
+:root {
+    --main-admin-bg-color: brown;
+
+}
+/* ADMINISTRACION */
+.vertical-nav {
+    min-width: 17rem;
+    width: 17rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+    /*background-color: #40A980;*/
+    background-color: #333333;
+}
+
+.page-content {
+    width: calc(100% - 17rem);
+    margin-left: 17rem;
+    transition: all 0.4s;
+}
+#sidebar.active {
+    margin-left: -17rem;
+}
+
+#content.active {
+    width: 100%;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+#sidebar {
+    margin-left: -17rem;
+}
+
+#sidebar.active {
+    margin-left: 0;
+}
+
+#content {
+    width: 100%;
+    margin: 0;
+}
+
+#content.active {
+     margin-left: 17rem;
+    width: calc(100% - 17rem);
+}
+}
+
+.nav{
+    margin-top: -20%;
+}
+.nav-item {
+    background-color: #333333;
+    padding-top: 6%;
+}
+.nav-item a{
+    color: aliceblue;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-item:hover{
+    background-color: darkred;
+    cursor: pointer;
+}
+
+.icon-admin {
+    margin-right: 2%;
+    margin-left: 5%;
+    color: aliceblue;   
+}
+#imagenAnime {
+    width: 225px;
+    background-size: cover;
+    margin: 5%;
+    height: 338px;
+    background-image: url("https://cdn.myanimelist.net/images/anime/7/76014.webp");
+}
