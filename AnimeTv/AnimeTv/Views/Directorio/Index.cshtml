@@ -1,0 +1,83 @@
+﻿@model DirectorioAnimeViewModel
+@{
+    ViewData["Title"] = "Directorio de animes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="titulos-front">Directorio de animes</h1>
+<div class="filtros">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="filtro-genero">Género</label>
+            <select id="filtro-genero" class="form-control">
+            @foreach (var genero in Model.Generos)
+            {
+                <option value="@genero.name">@genero.name</option>
+            }
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="filtro-estado">Estado</label>
+            <select id="filtro-estado" class="form-control">
+                <option value="emision">En emisión</option>
+                <option value="finalizado" selected>Finalizado</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="filtro-orden">Orden</label>
+            <select id="filtro-orden" class="form-control">
+                <option value="AZ">Nombre A-Z</option>
+                <option value="ZA">Nombre Z-A</option>
+                <option value="score">Puntuación</option>
+                <option value="popularity">Popularidad</option>
+                <option value="members">Seguidores</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @foreach (var anime in Model.ListaAnimes)
+    {
+        <div class="col-sm-3">
+            <div class="card">
+                <input type="hidden" value="@anime.synopsis" />
+                <img src="@anime.images.jpg.image_url" class="card-img-top" alt="Cartel del anime">
+                <div class="card-body">
+                    <h5 class="card-title">@anime.title</h5>
+                    <div class="row">
+
+
+                        @foreach (var genero in anime.genres)
+                        {
+                            <span class="genero-card card-text">@genero.name</span>
+                        }
+                    </div>
+                    <p class="card-text"><small class="text-muted">@anime.members seguidores</small></p>
+                    <a class="card-btn btn btn-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Ver Anime</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="modalSinopsis" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Privacy">Ver anime</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

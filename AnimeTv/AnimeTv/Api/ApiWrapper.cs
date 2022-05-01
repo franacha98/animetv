@@ -14,9 +14,8 @@ namespace AnimeTv.Api
 
         public List<Datum> ObtenerAnimesPorNombre(string pNombre)
         {
-            string peticion = $"{mUrlBase}/anime?q={pNombre}&sfw";
+            string peticion = $"{mUrlBase}/anime?letter={pNombre}";
             string response = UtilWeb.WebRequest("GET", peticion, null);
-            //dynamic json = JsonConvert.DeserializeObject(response);
             var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
@@ -25,6 +24,38 @@ namespace AnimeTv.Api
             Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(response, settings);
 
             List<Datum> lista = myDeserializedClass.data;
+
+            return lista;
+        }
+
+        public List<Datum> ObtenerAnimesPorNombre(string pNombre, int pPagina, int pLimite)
+        {
+            string peticion = $"{mUrlBase}/anime?letter={pNombre}&page={pPagina}&limit={pLimite}";
+            string response = UtilWeb.WebRequest("GET", peticion, null);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(response, settings);
+
+            List<Datum> lista = myDeserializedClass.data;
+
+            return lista;
+        }
+
+        public List<Genero> ObtenerListadoGeneros()
+        {
+            string peticion = $"{mUrlBase}/genres/anime";
+            string response = UtilWeb.WebRequest("GET", peticion, null);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            Raiz myDeserializedClass = JsonConvert.DeserializeObject<Raiz>(response, settings);
+
+            List<Genero> lista = myDeserializedClass.data;
 
             return lista;
         }

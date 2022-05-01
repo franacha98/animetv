@@ -60,3 +60,11 @@ function Autocompletar(nombre) {
         });
     }   
 }
+
+$(".col-sm-3").click(function (event) {
+    var sinopsis = event.currentTarget.children[0].children[0].value;
+    var titulo = event.currentTarget.children[0].children[2].children[0].textContent;
+    $('.modal-body').text(sinopsis);
+    $("#exampleModalLongTitle").text(titulo);
+    $('#modalSinopsis').modal({ show: true });
+})
