@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AnimeTv.Controllers
@@ -33,10 +34,27 @@ namespace AnimeTv.Controllers
         }
         public IActionResult Index()
         {
+            int limite = 20;
             DirectorioAnimeViewModel model = new DirectorioAnimeViewModel();
-            model.ListaAnimes = mApiWrapper.ObtenerAnimesPorNombre("", 1, 20);
+            model.ListaAnimes = mApiWrapper.ObtenerAnimesPorNombre("", 1, limite);
+            Thread.Sleep(1000);
             model.Generos = mApiWrapper.ObtenerListadoGeneros();
+            model.InfoPaginas = mApiWrapper.ObtenerInfoPaginacion(limite);
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Filtrar(int pGenero, int pPagina, string pOrden, string pEstado)
+        {
+            int limite = 20;
+            DirectorioAnimeViewModel model = new DirectorioAnimeViewModel();
+            model.ListaAnimes = mApiWrapper.ObtenerAnimesFiltrados(pGenero, pPagina, pOrden, pEstado);
+            model.Generos = mApiWrapper.ObtenerListadoGeneros();
+            model.InfoPaginas = mApiWrapper.ObtenerInfoPaginacion(limite);
+            model.GeneroSeleccionado = pGenero;
+            model.OrdenSeleccionado = pOrden;
+            model.EstadoSeleccionado = pEstado;
+            return View("../Directorio/Index", model);
         }
     }
 }

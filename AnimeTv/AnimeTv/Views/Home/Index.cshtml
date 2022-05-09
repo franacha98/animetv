@@ -1,9 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Inicio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-sm-4" id="panel-vertical">
+        <div class="d-flex flex-column" id="en-emision">
+            <div class="p-2" style="height: 200px; background-color: yellow;"></div>
+            <div class="p-2 border-bottom" style="margin-top: 5%;"><h3 style="font-size: 25px; font-weight: 300;">Animes en emisión</h3></div>
+            @foreach (var anime in Model.AnimesEnEmision)
+            {
+                <a href="#" class="link-emision p-2"><i class="fa fa-play-circle" style="color:silver"></i>&nbsp;&nbsp;&nbsp;@anime.title</a>
+            }
+        </div>
+    </div>
+    <div class="col-sm-8" id="panel-central" style="margin-top: 3%;">
+        <h2 style="font-size: 35px; font-weight: 300;">Últimos capítulos agregados</h2>
+        <div id="ultimos-episodios" class="row">
+            @foreach (var episodio in Model.EpisodiosRecientes)
+            {
+                <div class="col-sm-3">
+                    <div class="episodio card">
+                        <!--<img src="@episodio.entry.images.jpg.image_url" class="card-img-top" alt="Cartel del anime">-->
+                        <div class="card-body" style="background-image: url(@episodio.entry.images.jpg.image_url);  background-size: cover; height: 200px;">
+                            <span style="opacity:0; color: black; font-weight:bold;">@episodio.entry.title</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <h2 style="font-size: 35px; font-weight: 300; margin-top: 5%;">Próximos estrenos</h2>
+        <div id="proximos-estrenos" class="row">
+            @foreach (var anime in Model.ProximosAnimes)
+            {
+                <div class="col-sm-3">
+                    <div class="proximos card">
+                        <img src="@anime.images.jpg.large_image_url" class="card-img-top" alt="Cartel del anime">
+                        <div class="card-body">
+                            <p>@anime.title</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+

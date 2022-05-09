@@ -9,48 +9,134 @@
         <div class="form-group col-md-4">
             <label for="filtro-genero">Género</label>
             <select id="filtro-genero" class="form-control">
-            @foreach (var genero in Model.Generos)
-            {
-                <option value="@genero.name">@genero.name</option>
-            }
+                <option value="none">Ningún género seleccionado</option>
+                @foreach (var genero in Model.Generos)
+                {
+                    if (genero.mal_id == Model.GeneroSeleccionado)
+                    {
+                        <option value="@genero.mal_id" selected>@genero.name</option>
+                    }
+                    else
+                    {
+                        <option value="@genero.mal_id">@genero.name</option>
+                    }
+
+                }
             </select>
         </div>
         <div class="form-group col-md-4">
             <label for="filtro-estado">Estado</label>
             <select id="filtro-estado" class="form-control">
-                <option value="emision">En emisión</option>
-                <option value="finalizado" selected>Finalizado</option>
+                @if (Model.EstadoSeleccionado == "airing")
+                {
+                    <option value="airing" selected>En emisión</option>
+                    <option value="complete">Finalizado</option>
+                    <option value="upcoming">Próximos estrenos</option>
+                }
+                else if (Model.EstadoSeleccionado == "complete")
+                {
+                    <option value="airing">En emisión</option>
+                    <option value="complete" selected>Finalizado</option>
+                    <option value="upcoming">Próximos estrenos</option>
+                }
+                else if (Model.EstadoSeleccionado == "upcoming")
+                {
+                    <option value="airing">En emisión</option>
+                    <option value="complete">Finalizado</option>
+                    <option value="upcoming" selected>Próximos estrenos</option>
+                }
+                else if (string.IsNullOrEmpty(Model.EstadoSeleccionado))
+                {
+                    <option value="airing">En emisión</option>
+                    <option value="complete" selected>Finalizado</option>
+                    <option value="upcoming">Próximos estrenos</option>
+                }
+
             </select>
         </div>
         <div class="form-group col-md-4">
             <label for="filtro-orden">Orden</label>
             <select id="filtro-orden" class="form-control">
-                <option value="AZ">Nombre A-Z</option>
-                <option value="ZA">Nombre Z-A</option>
-                <option value="score">Puntuación</option>
-                <option value="popularity">Popularidad</option>
-                <option value="members">Seguidores</option>
+                @if (Model.OrdenSeleccionado == "desc")
+                {
+                    <option value="desc" selected>Nombre Z-A</option>
+                    <option value="asc">Nombre A-Z</option>
+                    <option value="score">Puntuación</option>
+                    <option value="popularity">Popularidad</option>
+                    <option value="members">Seguidores</option>
+                }
+                else if (Model.OrdenSeleccionado == "asc")
+                {
+                    <option value="desc">Nombre Z-A</option>
+                    <option value="asc" selected>Nombre A-Z</option>
+                    <option value="score">Puntuación</option>
+                    <option value="popularity">Popularidad</option>
+                    <option value="members">Seguidores</option>
+                }
+                else if (Model.OrdenSeleccionado == "score")
+                {
+                    <option value="desc">Nombre Z-A</option>
+                    <option value="asc">Nombre A-Z</option>
+                    <option value="score" selected>Puntuación</option>
+                    <option value="popularity">Popularidad</option>
+                    <option value="members">Seguidores</option>
+                }
+                else if (Model.OrdenSeleccionado == "popularity")
+                {
+                    <option value="desc">Nombre Z-A</option>
+                    <option value="asc">Nombre A-Z</option>
+                    <option value="score">Puntuación</option>
+                    <option value="popularity" selected>Popularidad</option>
+                    <option value="members">Seguidores</option>
+                }
+                else if (Model.OrdenSeleccionado == "members")
+                {
+                    <option value="desc">Nombre Z-A</option>
+                    <option value="asc">Nombre A-Z</option>
+                    <option value="score">Puntuación</option>
+                    <option value="popularity">Popularidad</option>
+                    <option value="members" selected>Seguidores</option>
+                }
+                else if (string.IsNullOrEmpty(Model.OrdenSeleccionado))
+                {
+                    <option value="desc" selected>Nombre Z-A</option>
+                    <option value="asc">Nombre A-Z</option>
+                    <option value="score">Puntuación</option>
+                    <option value="popularity">Popularidad</option>
+                    <option value="members">Seguidores</option>
+                }
             </select>
         </div>
     </div>
 </div>
+<div class="row" style="margin-top: 5%;">
+    <div class="form-group col-md-3">
+        <button class="btn btn-outline-dark" id="bt-pag-anterior">Página anterior</button>
+    </div>
+    <div class="form-group col-md-3">
+        <button class="btn btn-outline-dark" id="bt-pag-siguiente">Página siguiente</button>
+    </div>
+    <div class="form-group col-md-3">
+        <button class="btn btn-outline-dark" id="bt-pag-final">Ir a la última página</button>
+    </div>
+</div>
+<p class="card-text"><small class="text-muted">Página @Model.InfoPaginas.current_page de @Model.InfoPaginas.last_visible_page</small></p>
 <div class="row">
     @foreach (var anime in Model.ListaAnimes)
     {
         <div class="col-sm-3">
             <div class="card">
                 <input type="hidden" value="@anime.synopsis" />
-                <img src="@anime.images.jpg.image_url" class="card-img-top" alt="Cartel del anime">
+                <img src="@anime.images.jpg.large_image_url" class="card-img-top" alt="Cartel del anime">
                 <div class="card-body">
                     <h5 class="card-title">@anime.title</h5>
                     <div class="row">
-
-
                         @foreach (var genero in anime.genres)
                         {
                             <span class="genero-card card-text">@genero.name</span>
                         }
                     </div>
+                    <p class="card-text" style="font-weight: bold; margin-top: 5%;">@anime.score <i class="fa fa-star" style="color: orange"></i>   <small class="text-muted">@anime.scored_by votos</small></p>
                     <p class="card-text"><small class="text-muted">@anime.members seguidores</small></p>
                     <a class="card-btn btn btn-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Ver Anime</a>
                 </div>

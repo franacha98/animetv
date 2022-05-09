@@ -33,6 +33,7 @@ $('document').ready(function () {
     listaAdmin = [];
     Autocompletar("");
 });
+
 function Autocompletar(nombre) {
     if (nombre == "" || nombre.length >= 2) {
         var aux = window.location.href.toLowerCase();
@@ -63,8 +64,75 @@ function Autocompletar(nombre) {
 
 $(".col-sm-3").click(function (event) {
     var sinopsis = event.currentTarget.children[0].children[0].value;
+    if (sinopsis == "" || sinopsis == undefined || sinopsis == null) {
+        sinopsis = "Todavía no hay una sinopsis para este Anime.";
+    }
     var titulo = event.currentTarget.children[0].children[2].children[0].textContent;
     $('.modal-body').text(sinopsis);
     $("#exampleModalLongTitle").text(titulo);
     $('#modalSinopsis').modal({ show: true });
-})
+});
+
+$(function () {
+    $("#filtro-estado").on("change", function (event) {
+        FiltrarListado(event);
+    });
+});
+$(function () {
+    $("#filtro-genero").on("change", function (event) {
+        FiltrarListado(event);
+    });
+});
+$(function () {
+    $("#filtro-orden").on("change", function (event) {
+        FiltrarListado(event);
+    });
+});
+$(function () {
+    $("#bt-pag-anterior").on("click", function (event) {
+        FiltrarListado(event);
+    });
+});
+$(function () {
+    $("#bt-pag-siguiente").on("click", function (event) {
+        FiltrarListado(event);
+    });
+});
+
+function FiltrarListado(event) {
+    var peticion = "http://localhost:8520/Directorio";
+    peticion = peticion + "/Filtrar";
+    var pagina = 1;
+    var genero = $("#filtro-genero").val();
+    var orden = $("#filtro-orden").val();
+    var estado = $("#filtro-estado").val();
+
+    peticion = peticion + "?pOrden=" + orden + "&pEstado=" + estado + "&pGenero=" + genero + "&pPagina=" + pagina;
+    location.href = peticion;
+}
+$(function () {
+    $("#btnLogin").on("click", function (event) {
+        $('#modalLogin').modal({ show: true });
+    });
+});
+
+function AbrirModalRegistro() {
+    $('#modalRegistro').modal({ show: true });
+}
+
+$(".episodio").mouseover(function (event) {
+    var bloque = event.currentTarget;
+    //bloque.style.filter = "brightness(50%)";
+    bloque.style.opacity = 0.5;
+    //bloque.children[0].children[0].style.filter = "brightness(1.75)";
+    bloque.children[0].children[0].style.opacity = 1;
+
+
+});
+
+$(".episodio").mouseleave(function (event) {
+    var bloque = event.currentTarget;
+    //bloque.style.filter = "brightness(1)";
+    bloque.style.opacity = 1;
+    bloque.children[0].children[0].style.opacity = 0;
+});

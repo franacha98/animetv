@@ -125,6 +125,30 @@ header{
 #filtro-generos{
     width: 20%;
 }
+
+#panel-central{
+    
+}
+
+.episodio:hover, .proximos:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: all .3s;
+    box-shadow: 0px 0px 7px 5px #cccccc;
+    cursor: pointer;
+}
+a.link-emision {
+    color: #333333;
+    text-decoration: none;
+    transition: all .4s;
+}
+a.link-emision:hover{
+    color:deepskyblue;
+}
+.episodio {
+    transition: all 0.4s;
+}
 /* ADMINISTRACION */
 .vertical-nav {
     min-width: 17rem;
@@ -203,3 +227,5 @@ header{
     height: 338px;
     background-image: url("https://cdn.myanimelist.net/images/anime/7/76014.webp");
 }
+
+
