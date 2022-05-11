@@ -33,7 +33,7 @@ namespace AnimeTv.Controllers
             mGestorVideo = new GestorVideos(mConexion);
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pAnimeID)
         {
             FichaViewModel model = new FichaViewModel();
 
