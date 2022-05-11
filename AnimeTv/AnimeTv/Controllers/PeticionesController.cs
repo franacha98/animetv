@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WebPush;
 
 namespace AnimeTv.Controllers
 {
@@ -23,6 +24,7 @@ namespace AnimeTv.Controllers
         private GestorVideos mGestorVideo;
         private string mPublicKey;
         private string mPrivateKey;
+        private string mSubject;
 
         public PeticionesController(ILogger<HomeController> pLoggingService, IConfiguration pConfigurationService)
         {
@@ -36,8 +38,37 @@ namespace AnimeTv.Controllers
             mGestorVideo = new GestorVideos(mConexion);
             mPublicKey = mConfigurationService["PublicKey"];
             mPrivateKey = mConfigurationService["PrivateKey"];
+            mSubject = mConfigurationService["Subject"];
         }
 
+        public void ComprobarNotificaciones()
+        {
+            //bool hayMensajesNuevos = ComprobarSiHayNotificacionesNuevas(elementos);
+            bool hayMensajesNuevos = true;
+            if (hayMensajesNuevos)
+            {
+                string subject = mSubject;
+                string publicKey = mPublicKey;
+                string privateKey = mPrivateKey;
+                VapidDetails vapidDetails = new VapidDetails(subject, publicKey, privateKey);
+                PushSubscription subscription = new PushSubscription(HttpContext.Request.Cookies["endpoint"], HttpContext.Request.Cookies["p256dh"], HttpContext.Request.Cookies["auth"]);
+                if (subscription == null)
+                {
+
+                }
+                WebPushClient webPushClient = new WebPushClient();
+                try
+                {
+                    webPushClient.SendNotification(subscription, "AnimeTV - Mensaje nuevo", vapidDetails);
+                }
+                catch (Exception exception)
+                {
+                    HttpContext.Response.Cookies.Append("endpoint", "", new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+                    HttpContext.Response.Cookies.Append("p256dh", "", new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+                    HttpContext.Response.Cookies.Append("auth", "", new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+                }
+            }
+        }
         public void SuscribirseNotificacionesPush(string pEndpoint, string pP256dh, string pAuth)
         {
             CookieOptions opts = new CookieOptions();
