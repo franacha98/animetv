@@ -136,3 +136,88 @@ $(".episodio").mouseleave(function (event) {
     bloque.style.opacity = 1;
     bloque.children[0].children[0].style.opacity = 0;
 });
+
+// NOTIFICACIONES PUSH
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/ServiceWorker.js");
+    });
+}
+if ('serviceWorker' in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/ServiceWorker.js")
+            .then((reg) => {
+                if (Notification.permission === "granted") {
+                    getSubscription(reg);
+                } else if (Notification.permission === "denied") {
+                    blockSubscription();
+                } else {
+                    requestNotificationAccess(reg);
+                }
+            });
+    });
+}
+
+function requestNotificationAccess(reg) {
+    Notification.requestPermission(function (status) {
+        if (status == "granted") {
+            getSubscription(reg);
+        } else if (status == "denied") {
+            blockSubscription();
+        }
+    });
+}
+
+function blockSubscription() {
+    var urlPeticion = location.protocol + "//" + location.host + "/PeticionesAJAX/DesuscribirseNotificacionesPush";
+
+    GnossPeticionAjax(
+        urlPeticion,
+        null,
+        true
+    ).done(function (data) {
+
+    }).fail(function (data) {
+
+    }).always(function () {
+
+    });
+}
+
+function fillSubscribeFields(sub) {
+    var endpoint = sub.endpoint;
+    var p256dh = arrayBufferToBase64(sub.getKey("p256dh"));
+    var auth = arrayBufferToBase64(sub.getKey("auth"));
+    var urlPeticion = location.protocol + "//" + location.host + "/PeticionesAJAX/SuscribirseNotificacionesPush";
+
+    var datapost =
+    {
+        pEndpoint: endpoint,
+        pP256dh: p256dh,
+        pAuth: auth
+    };
+
+    GnossPeticionAjax(
+        urlPeticion,
+        datapost,
+        true
+    ).done(function (data) {
+
+    }).fail(function (data) {
+
+    }).always(function () {
+
+    });
+}
+
+function arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+}
+// FIN NOTIFICACIONES PUSH
