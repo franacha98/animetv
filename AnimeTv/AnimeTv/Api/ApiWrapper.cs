@@ -28,6 +28,21 @@ namespace AnimeTv.Api
             return lista;
         }
 
+        public Datum ObtenerAnimePorID(int pAnimeId)
+        {
+            string peticion = $"{mUrlBase}/anime/{pAnimeId}";
+            string response = UtilWeb.WebRequest("GET", peticion, null);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(response, settings);
+            List<Datum> lista = myDeserializedClass.data;
+
+            return lista.FirstOrDefault();
+        }
+
         public List<Datum> ObtenerAnimesPorNombre(string pNombre, int pPagina, int pLimite)
         {
             string peticion = $"{mUrlBase}/anime?letter={pNombre}&page={pPagina}&limit={pLimite}";
