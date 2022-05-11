@@ -35,10 +35,12 @@ namespace AnimeTv.Controllers
             mGestorVideo = new GestorVideos(mConexion);
             mPublicKey = mConfigurationService["PublicKey"];
             mPrivateKey = mConfigurationService["PrivateKey"];
+            ViewBag.applicationServerKey = mPublicKey;
         }
 
         public IActionResult Index(int pAnimeID)
         {
+            ViewBag.applicationServerKey = mPublicKey;
             FichaViewModel model = new FichaViewModel();
             Data anime = mApiWrapper.ObtenerAnimePorID(pAnimeID);
             model.AnimeData = anime;

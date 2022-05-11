@@ -20,6 +20,8 @@ namespace AnimeTv.Controllers
         private string mBaseUrl;
         private ApiWrapper mApiWrapper;
         private GestorVideos mGestorVideo;
+        private string mPublicKey;
+        private string mPrivateKey;
 
         public DirectorioController(ILogger<HomeController> pLoggingService, IConfiguration pConfigurationService)
         {
@@ -31,9 +33,13 @@ namespace AnimeTv.Controllers
             mApiWrapper = new ApiWrapper();
             mConexion = new MySqlConnection(mConfigurationService.GetConnectionString("MySQL"));
             mGestorVideo = new GestorVideos(mConexion);
+            mPublicKey = mConfigurationService["PublicKey"];
+            mPrivateKey = mConfigurationService["PrivateKey"];
+            ViewBag.applicationServerKey = mPublicKey;
         }
         public IActionResult Index()
         {
+            ViewBag.applicationServerKey = mPublicKey;
             int limite = 20;
             DirectorioAnimeViewModel model = new DirectorioAnimeViewModel();
             model.ListaAnimes = mApiWrapper.ObtenerAnimesPorNombre("", 1, limite);
@@ -46,6 +52,7 @@ namespace AnimeTv.Controllers
         [HttpGet]
         public IActionResult Filtrar(int pGenero, int pPagina, string pOrden, string pEstado)
         {
+            ViewBag.applicationServerKey = mPublicKey;
             int limite = 20;
             DirectorioAnimeViewModel model = new DirectorioAnimeViewModel();
             model.ListaAnimes = mApiWrapper.ObtenerAnimesFiltrados(pGenero, pPagina, pOrden, pEstado);

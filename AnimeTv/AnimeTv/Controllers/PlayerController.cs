@@ -20,6 +20,8 @@ namespace AnimeTv.Controllers
         private string mBaseUrl;
         private ApiWrapper mApiWrapper;
         private GestorVideos mGestorVideo;
+        private string mPublicKey;
+        private string mPrivateKey;
 
         public PlayerController(ILogger<HomeController> pLoggingService, IConfiguration pConfigurationService)
         {
@@ -31,10 +33,14 @@ namespace AnimeTv.Controllers
             mApiWrapper = new ApiWrapper();
             mConexion = new MySqlConnection(mConfigurationService.GetConnectionString("MySQL"));
             mGestorVideo = new GestorVideos(mConexion);
+            mPublicKey = mConfigurationService["PublicKey"];
+            mPrivateKey = mConfigurationService["PrivateKey"];
+            ViewBag.applicationServerKey = mPublicKey;
         }
 
         public IActionResult Index()
         {
+            ViewBag.applicationServerKey = mPublicKey;
             PlayerViewModel model = new PlayerViewModel();
 
             return View(model);
