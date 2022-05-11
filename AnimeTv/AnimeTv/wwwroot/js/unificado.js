@@ -189,7 +189,7 @@ function fillSubscribeFields(sub) {
     var endpoint = sub.endpoint;
     var p256dh = arrayBufferToBase64(sub.getKey("p256dh"));
     var auth = arrayBufferToBase64(sub.getKey("auth"));
-    var urlPeticion = location.protocol + "//" + location.host + "/PeticionesAJAX/SuscribirseNotificacionesPush";
+    var urlPeticion = location.protocol + "//" + location.host + "/Peticiones/SuscribirseNotificacionesPush";
 
     var datapost =
     {
