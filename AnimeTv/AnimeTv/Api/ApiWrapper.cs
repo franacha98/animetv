@@ -28,7 +28,7 @@ namespace AnimeTv.Api
             return lista;
         }
 
-        public Datum ObtenerAnimePorID(int pAnimeId)
+        public Data ObtenerAnimePorID(int pAnimeId)
         {
             string peticion = $"{mUrlBase}/anime/{pAnimeId}";
             string response = UtilWeb.WebRequest("GET", peticion, null);
@@ -37,10 +37,10 @@ namespace AnimeTv.Api
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             };
-            Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(response, settings);
-            List<Datum> lista = myDeserializedClass.data;
+            AnimeData myDeserializedClass = JsonConvert.DeserializeObject<AnimeData>(response, settings);
+            Data anime = myDeserializedClass.data;
 
-            return lista.FirstOrDefault();
+            return anime;
         }
 
         public List<Datum> ObtenerAnimesPorNombre(string pNombre, int pPagina, int pLimite)

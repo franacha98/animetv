@@ -20,6 +20,8 @@ namespace AnimeTv.Controllers
         private string mBaseUrl;
         private ApiWrapper mApiWrapper;
         private GestorVideos mGestorVideo;
+        private string mPublicKey;
+        private string mPrivateKey;
 
         public FichaController(ILogger<HomeController> pLoggingService, IConfiguration pConfigurationService)
         {
@@ -31,12 +33,22 @@ namespace AnimeTv.Controllers
             mApiWrapper = new ApiWrapper();
             mConexion = new MySqlConnection(mConfigurationService.GetConnectionString("MySQL"));
             mGestorVideo = new GestorVideos(mConexion);
+            mPublicKey = mConfigurationService["PublicKey"];
+            mPrivateKey = mConfigurationService["PrivateKey"];
         }
 
         public IActionResult Index(int pAnimeID)
         {
             FichaViewModel model = new FichaViewModel();
-
+            Data anime = mApiWrapper.ObtenerAnimePorID(pAnimeID);
+            model.AnimeData = anime;
+            model.Productora = anime.producers.FirstOrDefault().name;
+            model.Estudio = anime.studios.FirstOrDefault().name;
+            model.Capitulos = anime.episodes;
+            model.Estado = anime.status;
+            model.Id = anime.mal_id;
+            model.Nombre = anime.title;
+            
             return View(model);
         }
     }
