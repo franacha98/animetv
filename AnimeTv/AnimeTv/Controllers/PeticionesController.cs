@@ -43,8 +43,8 @@ namespace AnimeTv.Controllers
 
         public void ComprobarNotificaciones()
         {
-            //bool hayMensajesNuevos = ComprobarSiHayNotificacionesNuevas(elementos);
-            bool hayMensajesNuevos = true;
+            bool hayMensajesNuevos = ComprobarSiHayNoticiasNuevas();
+           
             if (hayMensajesNuevos)
             {
                 string subject = mSubject;
@@ -52,10 +52,7 @@ namespace AnimeTv.Controllers
                 string privateKey = mPrivateKey;
                 VapidDetails vapidDetails = new VapidDetails(subject, publicKey, privateKey);
                 PushSubscription subscription = new PushSubscription(HttpContext.Request.Cookies["endpoint"], HttpContext.Request.Cookies["p256dh"], HttpContext.Request.Cookies["auth"]);
-                if (subscription == null)
-                {
 
-                }
                 WebPushClient webPushClient = new WebPushClient();
                 try
                 {
@@ -68,6 +65,11 @@ namespace AnimeTv.Controllers
                     HttpContext.Response.Cookies.Append("auth", "", new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
                 }
             }
+        }
+
+        public bool ComprobarSiHayNoticiasNuevas()
+        {
+            return true;
         }
         public void SuscribirseNotificacionesPush(string pEndpoint, string pP256dh, string pAuth)
         {

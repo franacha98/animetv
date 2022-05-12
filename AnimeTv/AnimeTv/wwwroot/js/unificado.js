@@ -198,16 +198,10 @@ function fillSubscribeFields(sub) {
         pAuth: auth
     };
 
-    GnossPeticionAjax(
-        urlPeticion,
-        datapost,
-        true
-    ).done(function (data) {
-
-    }).fail(function (data) {
-
-    }).always(function () {
-
+    $.ajax({
+        method: "POST",
+        url: urlPeticion,
+        data: datapost
     });
 }
 
