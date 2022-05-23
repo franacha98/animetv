@@ -38,19 +38,23 @@ namespace AnimeTv.Controllers
             ViewBag.applicationServerKey = mPublicKey;
         }
 
-        public IActionResult Index(int pAnimeID)
+        public IActionResult Index(int id)
         {
             ViewBag.applicationServerKey = mPublicKey;
             FichaViewModel model = new FichaViewModel();
-            Data anime = mApiWrapper.ObtenerAnimePorID(pAnimeID);
+            Data anime = mApiWrapper.ObtenerAnimePorID(id);
+            Thread.Sleep(1000);
             model.AnimeData = anime;
             model.Productora = anime.producers.FirstOrDefault().name;
             model.Estudio = anime.studios.FirstOrDefault().name;
             model.Capitulos = anime.episodes;
-            model.Estado = anime.status;
+            model.Emision = anime.airing;
             model.Id = anime.mal_id;
             model.Nombre = anime.title;
-            
+            model.Generos = anime.demographics;
+            model.Episodios = mApiWrapper.ObtenerEpisodiosAnime(id);
+            model.Count = 0;
+
             return View(model);
         }
     }

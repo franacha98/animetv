@@ -16,6 +16,24 @@ namespace AnimeTv.Entity
             mConexion = pConexion;
         }
 
+        public int ObtenerVideoPorAnimeYCapitulo(int pAnime, int pCapitulo)
+        {
+            int video = 0;
+            mConexion.Open();
+            MySqlCommand comando = mConexion.CreateCommand();
+            comando.CommandText = $"SELECT videoid FROM videos where anime='{pAnime}' AND capitulo='{pCapitulo}'";
+            var reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    video = reader.GetInt32(0);
+                }
+            }
+            mConexion.Close();
+            return video;
+        }
+
         public bool EliminarVideo(int pAnime, int pCapitulo)
         {
             mConexion.Open();
@@ -53,6 +71,85 @@ namespace AnimeTv.Entity
 
             return lista;
         }
+
+        public bool Login(string pEmail, string pPassword)
+        {
+            mConexion.Open();
+            MySqlCommand comando = mConexion.CreateCommand();
+            comando.CommandText = $"SELECT * FROM usuarios WHERE correo='{pEmail}' AND clave='{pPassword}'";
+            bool loginCorrecto = false;
+            var reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                loginCorrecto = true;
+            }
+            mConexion.Close();
+
+            return loginCorrecto;
+        }
+
+        public bool Registro(string pEmail, string pNombre, string pPassword)
+        {
+            try
+            {
+                mConexion.Open();
+                MySqlCommand comando = mConexion.CreateCommand();
+                comando.CommandText = $"INSERT INTO usuarios (correo, nombre, clave, esadmin) values ('{pEmail}','{pNombre}','{pPassword}','0');";
+                int resultado = comando.ExecuteNonQuery();
+                mConexion.Close();
+                if (resultado == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                mConexion.Close();
+                return false;
+            }
+        }
+
+        public bool MarcarVisto(string pEmail, int pVideo, int pAnime, int pEpisodio)
+        {
+            try
+            {
+                mConexion.Open();
+
+                MySqlCommand comando = mConexion.CreateCommand();
+                comando.CommandText = $"INSERT INTO vistos (usuario, video, anime, episodio) values ('{pEmail}','{pVideo}','{pAnime}','{pEpisodio}');";
+                int resultado = comando.ExecuteNonQuery();
+                mConexion.Close();
+                if (resultado == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                mConexion.Close();
+                return false;
+            }
+        }
+
+        public bool YaVisto(string pEmail, int pVideo)
+        {
+            mConexion.Open();
+            MySqlCommand comando = mConexion.CreateCommand();
+            comando.CommandText = $"SELECT * FROM vistos WHERE usuario='{pEmail}' AND video='{pVideo}'";
+            var reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                mConexion.Close();
+                return true;
+            }
+            mConexion.Close();
+            return false;
+        }
+
 
         public bool InsertarVideo(string pVideoID, int pAnime, int pTemporada, int pCapitulo)
         {

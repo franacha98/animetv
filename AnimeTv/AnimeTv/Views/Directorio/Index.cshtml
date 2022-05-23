@@ -125,7 +125,7 @@
     @foreach (var anime in Model.ListaAnimes)
     {
         <div class="col-sm-3">
-            <div class="card">
+            <div class="card sombra">
                 <input type="hidden" value="@anime.synopsis" />
                 <img src="@anime.images.jpg.large_image_url" class="card-img-top" alt="Cartel del anime">
                 <div class="card-body">
@@ -138,7 +138,7 @@
                     </div>
                     <p class="card-text" style="font-weight: bold; margin-top: 5%;">@anime.score <i class="fa fa-star" style="color: orange"></i>   <small class="text-muted">@anime.scored_by votos</small></p>
                     <p class="card-text"><small class="text-muted">@anime.members seguidores</small></p>
-                    <a class="card-btn btn btn-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Ver Anime</a>
+                    <a class="card-btn btn btn-dark" asp-area="" asp-controller="Ficha" asp-action="" asp-route-id="@anime.mal_id">Ver Anime</a>
                 </div>
             </div>
         </div>

@@ -27,14 +27,17 @@
                             <a class="nav-link-menu" asp-area="" asp-controller="Directorio" asp-action="Index">DIRECTORIO ANIME</a>
                         </li>
                         <li class="nav-item-menu">
-                            <a class="nav-link-menu" asp-area="" asp-controller="Home" asp-action="Privacy">MI LISTA</a>
+                            <a class="nav-link-menu" asp-area="" asp-controller="Lista" asp-action="Index">MI LISTA</a>
                         </li>
                         <li class="nav-item-menu">
                             <button class="nav-link-menu" id="btnLogin" style="background-color: #343a40; border: none ">LOGIN</button>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
+                        <!--<input class="buscador-menu form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">-->
+                        <input list="listaAnimes" name="pAnime" class="buscador-menu form-control" id="pAnime" placeholder="Buscar..." aria-label="Search" onchange="irAlAnime(this)">
+                        <datalist id="listaAnimes">
+                        </datalist>
                     </form>
                 </div>
             </div>
@@ -57,21 +60,21 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form asp-controller="Sesion" asp-action="Login" method="post">
                         <div class="form-group">
                             <label for="pEmail">Direccion de correo electrónico</label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
                                 </div>
-                                <input type="email" class="form-control" id="pEmail" placeholder="example@mail.com">
+                                <input type="email" class="form-control" id="pEmail" name="pEmail" placeholder="example@mail.com">
                             </div>
                             <label for="pPassword">Contraseña</label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-lock"></i></div>
                                 </div>
-                                <input type="password" class="form-control" id="pPassword" placeholder="Contraseña">
+                                <input type="password" class="form-control" id="pPassword" name="pPassword" placeholder="Contraseña">
                             </div>
                             <button type="submit" class="btn btn-primary">Iniciar sesión</button>
                         </div>
@@ -97,11 +100,35 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <form asp-controller="Sesion" asp-action="Registro" method="post">
+                        <div class="form-group">
+                            <label for="pNombre">Nombre</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-user"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="pNombre" name="pNombre" placeholder="Nombre usuario">
+                            </div>
+                            <label for="pEmail">Direccion de correo electrónico</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-envelope"></i></div>
+                                </div>
+                                <input type="email" class="form-control" id="pEmail" name="pEmail" placeholder="example@mail.com">
+                            </div>
+                            <label for="pPassword">Contraseña</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-lock"></i></div>
+                                </div>
+                                <input type="password" class="form-control" id="pPassword" name="pPassword" placeholder="Contraseña">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registro</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Privacy">Ver anime</a>
                 </div>
             </div>
         </div>
@@ -136,4 +163,5 @@
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+<script id="dsq-count-scr" src="//animetv-5.disqus.com/count.js" async></script>
 </html>

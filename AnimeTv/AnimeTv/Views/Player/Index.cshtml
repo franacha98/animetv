@@ -3,4 +3,66 @@
     ViewData["Title"] = "Reproductor de animes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="titulos-front">Ver episodio</h1>
+<h1 class="titulos-front"><a style="color: #343a40" asp-area="" asp-controller="Ficha" asp-action="" asp-route-id="@Model.AnimeData.mal_id">@Model.Anime</a></h1>
+<h2 class="subtitulo col-sm-8">Episodio @Model.Capitulo</h2>
+<div class="row">
+    <div class="col-sm-8">
+        <iframe allowfullscreen style="width: 100%; height: 500px; border: none;" src="@Model.UrlVideo"></iframe>
+        <div class="d-flex justify-content-between" style="margin-left: 5%; margin-right: 5%; margin-top: 2%;">
+            <button onclick="marcarVisto(@Model.VideoID, @Model.AnimeData.mal_id, @Model.Capitulo)" class="sombra p-2" style=" border: none; padding: 0; width: 40px; height: 40px; font-size: 15px; color: #14bbf0; border-radius: 20px; white-space: nowrap; cursor: pointer; background-color: white;">
+                @if (Model.Visto)
+                {
+                    <i class="fa fa-eye-slash"></i>
+                }
+                else
+                {
+                    <i class="fa fa-eye"></i>
+                }
+
+            </button>
+            <button type="button" class="btn btn-success" style="border-radius: 20px; font-weight: bold;"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp; DESCARGAR</button>
+        </div>
+    </div>
+    
+    <div id="noticias" class="col-sm-3 row" style="margin-top: -5%; margin-left:5%;">
+        <div class="sombra" style=" background-color: yellow; height: 200px; width: 100%;"></div>
+        <div class="sombra" style=" background-color: white; margin-top: 8%; padding: 5%">
+            <h3>Noticias</h3><br />
+            @foreach (var noticia in Model.Noticias)
+            {
+                <div class="card mb-3" style="max-width: 540px; border: none;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="@noticia.images.jpg.image_url" class="card-img" alt="Imagen noticia">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                @if (noticia.title.Length > 10)
+                                {
+                                    <a href="#" style="font-weight: bold;" class=" link-emision">@noticia.title.Substring(0, 15)...</a>
+                                }
+                                else
+                                {
+                                    <a href="#" style="font-weight: bold;" class=" link-emision">@noticia.title</a>
+                                }
+                                <p class="card-text"><small style="font-weight: bold; color: black; background-color: #ffc107; border-radius: 50px; padding: 5%;">@noticia.date.ToShortDateString()</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!--comentarios-->
+<div id="disqus_thread" style="margin-top: 5%"></div>
+<script>
+    (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://animetv-5.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

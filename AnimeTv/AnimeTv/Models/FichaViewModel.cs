@@ -14,6 +14,9 @@ namespace AnimeTv.Models
         public string Productora;
         public int Capitulos;
         public string Estudio;
-        public string Estado;
+        public bool Emision;
+        public List<Demographic> Generos;
+        public List<EpisodioAnime> Episodios;
+        public int Count;
     }
 }

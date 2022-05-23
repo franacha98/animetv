@@ -28,6 +28,34 @@ namespace AnimeTv.Api
             return lista;
         }
 
+        public List<EpisodioAnime> ObtenerEpisodiosAnime(int pAnimeId)
+        {
+            string peticion = $"{mUrlBase}/anime/{pAnimeId}/episodes";
+            string response = UtilWeb.WebRequest("GET", peticion, null);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            RootEpisodioAnime myDeserializedClass = JsonConvert.DeserializeObject<RootEpisodioAnime>(response, settings);
+            List<EpisodioAnime> lista = myDeserializedClass.data;
+            return lista;
+        }
+
+        public List<New> ObtenerNoticiasAnime(int pAnimeId)
+        {
+            string peticion = $"{mUrlBase}/anime/{pAnimeId}/news";
+            string response = UtilWeb.WebRequest("GET", peticion, null);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            News myDeserializedClass = JsonConvert.DeserializeObject<News>(response, settings);
+            List<New> lista = myDeserializedClass.data;
+            return lista;
+        }
+
         public Data ObtenerAnimePorID(int pAnimeId)
         {
             string peticion = $"{mUrlBase}/anime/{pAnimeId}";

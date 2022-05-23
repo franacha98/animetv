@@ -62,6 +62,47 @@ function Autocompletar(nombre) {
     }   
 }
 
+$(function () {
+    $(".buscador-menu").on("keydown", function (event) {
+        AutocompletarPublic($(".buscador-menu").val() + "" + event.key);
+    });
+});
+
+function AutocompletarPublic(nombre) {
+    if (nombre == "" || nombre.length >= 2) {
+        var peticion = window.location.origin + "/Administracion/PeticionAutocompletar";
+        var dataPost = {
+            pNombre: nombre
+        };
+        $.ajax({
+            method: "POST",
+            url: peticion,
+            context: document.body,
+            dataType: "json",
+            data: dataPost,
+            success: function (lista) {
+                if (lista.length > 0) {
+                    listaAdmin = lista;
+                    $("#listaAnimes").html("");
+                    for (var i = 0; i < lista.length; i++) {
+                        $("#listaAnimes").append("<option onclick='irAlAnime(this)' value='" + lista[i].mal_id + "'>" + lista[i].title + "</option>");
+                    }
+                }
+            }
+        }).done(function () {
+        });
+    }
+}
+
+function irAlAnime(event) {
+    var id = event.value;
+    var peticion = window.location.origin + "/Ficha/Index/" + id;
+    setTimeout(function () {
+        window.location.href = peticion;
+    }, 2000);
+    
+}
+
 $(".col-sm-3").click(function (event) {
     var sinopsis = event.currentTarget.children[0].children[0].value;
     if (sinopsis == "" || sinopsis == undefined || sinopsis == null) {
@@ -100,7 +141,7 @@ $(function () {
 });
 
 function FiltrarListado(event) {
-    var peticion = "http://localhost:8520/Directorio";
+    var peticion = window.location.origin + "/Directorio";
     peticion = peticion + "/Filtrar";
     var pagina = 1;
     var genero = $("#filtro-genero").val();
@@ -215,3 +256,17 @@ function arrayBufferToBase64(buffer) {
     return window.btoa(binary);
 }
 // FIN NOTIFICACIONES PUSH
+
+function marcarVisto(video, anime, capitulo) {
+
+    $.ajax({
+        method: "GET",
+        url: window.location.origin + "/Player/MarcarVisto?pAnime=" + anime + "&pEpisodio=" + capitulo + "&pVideo=" + video,
+        dataType: "json",
+        success: function (response) {
+            if (response == "OK") {
+                $('.fa fa-eye').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        }
+    });
+}

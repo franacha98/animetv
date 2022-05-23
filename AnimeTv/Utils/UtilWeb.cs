@@ -114,8 +114,8 @@ namespace Utils
                 catch { }
 
                 // Error reading the error response, throw the original exception
-                throw new Exception(message, ex);
-                //return "";
+                //throw new Exception(message, ex);
+                return "";
             }
 
             webRequest = null;

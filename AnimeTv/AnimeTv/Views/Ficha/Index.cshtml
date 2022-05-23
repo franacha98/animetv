@@ -3,3 +3,122 @@
     ViewData["Title"] = "Ficha";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card" style="border:none;">
+            <img src="@Model.AnimeData.images.jpg.image_url" class="card-img-top" alt="Cartel del anime">
+            @if (Model.Emision)
+            {
+                <div class="card-body d-flex justify-content-center" style="background-color: #00c853; margin-top: 3%; border-radius: 10px;">
+                    <span style="color: white; font-weight: bold; font-size: 20px"><i class="fa fa-play-circle"></i>&nbsp;&nbsp;EN EMISIÓN</span>
+                </div>
+            }
+            else
+            {
+                <div class="card-body d-flex justify-content-center" style="background-color: #e62f41; margin-top: 3%; border-radius: 5px;">
+                    <span style="color: white; font-weight: bold; font-size: 20px"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;FINALIZADO</span>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-sm-8" id="panel-central" style="margin-top: 3%;">
+        <div class="d-flex justify-content-around">
+            <h1 class="display-4 p-2">@Model.Nombre</h1>
+            <div class="p-2 d-flex flex-column justify-content-center">
+                <span class="p-2" style="background-color: #01bcf3; color: white; font-weight: 700; font-size: 25px ">@Model.AnimeData.score&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-star" style="color: orange; font-size: 30px;"></i></span>
+                <small class="p-2" style="background-color: #01bcf3; color: white; ">
+                    @Model.AnimeData.scored_by VOTOS
+                </small>
+            </div>
+        </div>
+        <div style="margin-top: 5%;">
+            <h2 class="subtitulo border-bottom">Información general</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <i class="p-2 fa fa-star"></i>
+                        <span class="p-2">
+                            Géneros:
+                            @foreach (var genero in Model.AnimeData.genres)
+                            {
+                                <span class="border" style="background-color: silver; padding:5px; border-radius: 10px;">@genero.name</span>
+                            }
+                        </span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <i class="p-2 fa fa-television"></i>
+                        <span class="p-2">Episodios: @Model.Capitulos</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <i class="p-2 fa fa-calendar"></i>
+                        <span class="p-2">Año: @Model.AnimeData.year</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <i class="p-2 fa fa-user-o"></i>
+                        <span class="p-2">Seguidores: @Model.AnimeData.members</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <i class="p-2 fa fa-trophy"></i>
+                        <span class="p-2">Posición en el ranking: @Model.AnimeData.rank</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <i class="p-2 fa fa-star"></i>
+                        <span class="p-2">Rating: @Model.AnimeData.rating</span>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <div style="margin-top: 5%;">
+            <h2 class="subtitulo border-bottom">Sinopsis</h2>
+            <p style="text-align: justify; text-justify: inter-word;">
+                @Model.AnimeData.synopsis
+            </p>
+        </div>
+        <div style="margin-top: 5%;">
+            <h2 class="subtitulo border-bottom">Trailer</h2>
+            <iframe style="width: 100%; height: 400px;" src="@Model.AnimeData.trailer.embed_url"></iframe>
+        </div>
+    </div>
+</div>
+<div>
+    <h2 class="subtitulo border-bottom">Lista de episodios</h2>
+    <ul class="list-group">
+        @foreach (var episodio in Model.Episodios)
+        {
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <img style="width: 10%;" src="@Model.AnimeData.images.jpg.image_url" />
+                    <div class="d-flex flex-column">
+                        <h4 class="p-2">@Model.Nombre - @episodio.title</h4>
+                        <small class="p-2">Episodio @(++Model.Count)</small>
+                    </div>
+                    <button class="p-2 btn btn-info play-ep" style="background-color:white; border: none;"><i class="fa fa-play-circle play-ep" style="color: #01bcf3; font-size: 80px;"></i></button>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<!--comentarios-->
+<div id="disqus_thread" style="margin-top: 5%"></div>
+<script>
+    (function () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://animetv-5.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
