@@ -57,5 +57,14 @@ namespace AnimeTv.Controllers
 
             return View(model);
         }
+
+        public void AnadirALista(int pAnime)
+        {
+            string usuario = HttpContext.Request.Cookies["AnimeTV_Sesion"];
+            if (!string.IsNullOrEmpty(usuario))
+            {
+                mGestorVideo.AnadirALista(usuario, pAnime);
+            }
+        }
     }
 }

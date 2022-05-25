@@ -157,6 +157,23 @@ namespace AnimeTv.Entity
             return lista;
         }
 
+
+        public void AnadirALista(string pEmail, int pAnime)
+        {
+            try
+            {
+                mConexion.Open();
+                MySqlCommand comando = mConexion.CreateCommand();
+                comando.CommandText = $"INSERT INTO lista (usuario, anime) values ('{pEmail}','{pAnime}');";
+                int resultado = comando.ExecuteNonQuery();
+                mConexion.Close();      
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                mConexion.Close();
+            }
+        }
         public bool MarcarVisto(string pEmail, int pVideo, int pAnime, int pEpisodio)
         {
             try

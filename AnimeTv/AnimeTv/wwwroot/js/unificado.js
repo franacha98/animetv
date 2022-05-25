@@ -270,3 +270,14 @@ function marcarVisto(video, anime, capitulo) {
         }
     });
 }
+
+function AnadirLista(anime) {
+    $.ajax({
+        method: "GET",
+        url: window.location.origin + "/Ficha/AnadirALista?pAnime=" + anime,
+        dataType: "json",
+        success: function (response) {
+
+        }
+    });
+}
