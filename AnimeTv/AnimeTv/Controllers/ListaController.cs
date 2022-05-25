@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AnimeTv.Controllers
@@ -40,7 +41,21 @@ namespace AnimeTv.Controllers
         public IActionResult Index()
         {
             ListaViewModel model = new ListaViewModel();
+            string cookieSesion = HttpContext.Request.Cookies["AnimeTV_Sesion"];
+            if (!string.IsNullOrEmpty(cookieSesion))
+            {
+                return RedirectToAction(actionName: "Index", controllerName: "Home");
+            }
+            List<int> listaIDs = mGestorVideo.ObtenerListaDeUnUsuario(cookieSesion);
+            List<Data> listaAnimes = new List<Data>();
+            foreach (int id in listaIDs)
+            {
+                listaAnimes.Add(mApiWrapper.ObtenerAnimePorID(id));
+                Thread.Sleep(1000);
+            }
 
+            model.NombreUsuario = mGestorVideo.ObtenerNombreUsuario(cookieSesion);
+            model.ListaAnimes = listaAnimes;
 
             return View(model);
         }

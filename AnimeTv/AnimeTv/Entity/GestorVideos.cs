@@ -111,6 +111,52 @@ namespace AnimeTv.Entity
             }
         }
 
+        public string ObtenerNombreUsuario(string pEmail)
+        {
+            string nombre = "";
+            mConexion.Open();
+            MySqlCommand comando = mConexion.CreateCommand();
+            comando.CommandText = $"SELECT nombre FROM usuarios where correo='{pEmail}'";
+            var reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    nombre = reader.GetString(0);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No rows found.");
+            }
+            mConexion.Close();
+
+            return nombre;
+        }
+
+        public List<int> ObtenerListaDeUnUsuario(string pEmail)
+        {
+            List<int> lista = new List<int>();
+            mConexion.Open();
+            MySqlCommand comando = mConexion.CreateCommand();
+            comando.CommandText = $"SELECT anime FROM lista where usuario='{pEmail}'";
+            var reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                     lista.Add(reader.GetInt32(0));
+                }
+            }
+            else
+            {
+                Console.WriteLine("No rows found.");
+            }
+            mConexion.Close();
+
+            return lista;
+        }
+
         public bool MarcarVisto(string pEmail, int pVideo, int pAnime, int pEpisodio)
         {
             try
