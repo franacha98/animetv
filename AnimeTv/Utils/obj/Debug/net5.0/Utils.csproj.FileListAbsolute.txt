@@ -1,4 +1,6 @@
 D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.deps.json
+D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.runtimeconfig.json
+D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.runtimeconfig.dev.json
 D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.dll
 D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\ref\Utils.dll
 D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.pdb
@@ -9,7 +11,4 @@ D:\AnimeTV\AnimeTv\Utils\obj\Debug\net5.0\Utils.csproj.CoreCompileInputs.cache
 D:\AnimeTV\AnimeTv\Utils\obj\Debug\net5.0\Utils.dll
 D:\AnimeTV\AnimeTv\Utils\obj\Debug\net5.0\ref\Utils.dll
 D:\AnimeTV\AnimeTv\Utils\obj\Debug\net5.0\Utils.pdb
-D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.runtimeconfig.json
-D:\AnimeTV\AnimeTv\Utils\bin\Debug\net5.0\Utils.runtimeconfig.dev.json
 D:\AnimeTV\AnimeTv\Utils\obj\Debug\net5.0\Utils.genruntimeconfig.cache
-D:\AnimeTV\AnimeTv\Utils\obj\Debug\net5.0\Utils.csproj.AssemblyReference.cache

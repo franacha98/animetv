@@ -42,7 +42,7 @@ namespace AnimeTv.Controllers
         {
             ListaViewModel model = new ListaViewModel();
             string cookieSesion = HttpContext.Request.Cookies["AnimeTV_Sesion"];
-            if (!string.IsNullOrEmpty(cookieSesion))
+            if (string.IsNullOrEmpty(cookieSesion))
             {
                 return RedirectToAction(actionName: "Index", controllerName: "Home");
             }

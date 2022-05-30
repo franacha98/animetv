@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Home\publicidad.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Home\publicidad.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="JikanDotNet" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
